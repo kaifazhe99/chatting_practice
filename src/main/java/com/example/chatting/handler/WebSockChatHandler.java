@@ -16,10 +16,10 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class WebSockChatHandler extends TextWebSocketHandler {
 
     @Override
-    protected  void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
-        log.info("payload {}",payload);
-        TextMessage textMessage = new TextMessage("이마크 뚱돼지 똥멍청 똥바보");
+        log.info("payload {}", payload);
+        TextMessage textMessage = new TextMessage("하이욤");
         session.sendMessage(textMessage);
 
     }
