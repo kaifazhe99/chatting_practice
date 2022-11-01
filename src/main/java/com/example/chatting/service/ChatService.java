@@ -44,6 +44,10 @@ public class ChatService {
         return new ArrayList<>(chatRooms.values());
     }
 
+    public ChatRoom findRoomById(String roomId) {
+        return chatRooms.get(roomId) ;
+    }
+
     public ChatRoom createRoom(String name) {
         String randomId = UUID.randomUUID().toString();
         //Java 5 부터 UUID 클래스를 사용해서 유일한 식별자를 생성할 수 있습니다.

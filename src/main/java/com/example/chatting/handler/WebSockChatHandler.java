@@ -1,27 +1,36 @@
 package com.example.chatting.handler;
 
+import com.example.chatting.entity.dto.ChatMessage;
+import com.example.chatting.entity.dto.ChatRoom;
+import com.example.chatting.service.ChatService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-//soket통신은 서버와 클라어언트가 1:N으로 관계를 맺습니다. 따라서 한 서버에 여러 클라이언트가 접속할 수 있으며,
-//서버에는 여러 클라이언트가 발송한 메세지를 받아 처리해줄 Handler의 작성이 필요합니다.
-//다음과 같이 TextWebSocketHandler를 상속받아 Handler를 작성해 줍니다.
-//Cloent로부터 받은 메세지를 Console Log에 출력하고 Client로 환영 메세지를 보내는 역할을 합니다.
+//위에서 만든 채팅 로직을 handler에 추가합니다.
+// 🎱웹소캣 클라이언트로부터 채팅 메시지를 전달받아 채팅 메시지 객체로 변환
 
 @Slf4j
+@RequiredArgsConstructor
 @Component
 public class WebSockChatHandler extends TextWebSocketHandler {
+    private final ObjectMapper objectMapper;
+    private final ChatService chatService;
+
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
         log.info("payload {}", payload);
-        TextMessage textMessage = new TextMessage("하이욤");
-        session.sendMessage(textMessage);
-
+//        TextMessage textMessage = new TextMessage("하이욤");
+//        session.sendMessage(textMessage);
+        ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
+        ChatRoom room = chatService.findRoomById(chatMessage.getRoomId());
+        room.handleAction(session, chatMessage, chatService);
     }
 
 }
