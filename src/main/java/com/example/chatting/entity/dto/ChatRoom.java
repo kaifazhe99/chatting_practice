@@ -1,6 +1,7 @@
 package com.example.chatting.entity.dto;
 
 
+import com.example.chatting.service.ChatService;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.web.socket.WebSocketSession;
