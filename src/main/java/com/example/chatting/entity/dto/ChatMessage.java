@@ -15,7 +15,7 @@ public class ChatMessage {
     //메세지 타입: 입장, 채팅
 
     public enum MessageType {
-        ENTER, JOIN, TALK
+        ENTER, TALK
     }
 
     private MessageType type;// 메세지 타입

@@ -11,24 +11,21 @@ import org.springframework.web.socket.config.annotation.*;
 //메시지를 구독하는 요청의 prefix는 /sub로 시작하도록 설정합니다. 그리고 stomp websocket의 연결
 //endpoint 는 /ws-stomp로 설정합니다.
 
+
+
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSockConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
-    public void configureMessageBroker(MessageBrokerRegistry config){
+    public void configureMessageBroker(MessageBrokerRegistry config) {
         config.enableSimpleBroker("/sub");
         config.setApplicationDestinationPrefixes("/pub");
     }
 
     @Override
-    public void registerStompEndpoints(StompEndpointRegistry registry){
-        registry.addEndpoint("/ws-stomp").setAllowedOrigins("*")
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/ws-stomp").setAllowedOriginPatterns("*")
                 .withSockJS();
     }
-
-
-
-
-
 }

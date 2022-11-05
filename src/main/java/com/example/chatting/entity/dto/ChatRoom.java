@@ -1,9 +1,8 @@
 package com.example.chatting.entity.dto;
 
 
-
-
 import lombok.Getter;
+
 import java.util.UUID;
 
 
@@ -29,7 +28,6 @@ public class ChatRoom {
         chatRoom.name = name;
         return chatRoom;
     }
-
 
 
 }

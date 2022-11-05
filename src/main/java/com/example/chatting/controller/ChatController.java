@@ -17,23 +17,21 @@ import org.springframework.web.bind.annotation.*;
 //기존의 WebSockChatHandler가 했던 역할을 대체하므로 WebSockChatHandler는 삭제합니다.
 
 
-
-
-
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/chat")
 public class ChatController {
 
-   private final SimpMessageSendingOperations messagingTemplate;
+    private final SimpMessageSendingOperations messagingTemplate;
 
-   @MessageMapping("/message")
-    public void message (ChatMessage message){
-       if(ChatMessage.MessageType.JOIN.equals(message.getType())){
-           message.setMessage(message.getSender()+ "님이 입장하셨습니다.");
-           messagingTemplate.convertAndSend("/sub/chat/room/"+message.getRoomId());
+    @MessageMapping("/chat/message")
+    public void message(ChatMessage message) {
+        if (ChatMessage.MessageType.ENTER.equals(message.getType())) {
+            message.setMessage(message.getSender() + "님이 입장하셨습니다.");
+        }
+        //메시지가 안떴던 이유 중괄호를 잘못ㅈㅣ정함
+            messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
 
-       }
-   }
+
+    }
 }
 
